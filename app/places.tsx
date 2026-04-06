@@ -26,7 +26,7 @@ export const places = {
   coniscliffe: new Place(
     "Coniscliffe Road",
     "https://maps.app.goo.gl/gf9tQ3AnHcP5pYox8",
-    "Betwen Hash and Number Twenty 2",
+    "Between Hash and Number Twenty 2",
   ),
   dolphin_centre: new Place(
     "Dolphin Centre",
@@ -45,7 +45,7 @@ export const places = {
   market: new Place(
     "Indoor Market",
     "https://maps.app.goo.gl/ZtdZzoD3KD9Bk6Wm8",
-    "Inside the indoor Market, next to Market Place Fish & Chips",
+    "Next to Market Place Fish & Chips",
   ),
   joseph_pease_statue: new Place(
     "Joseph Pease Statue",

@@ -1,7 +1,8 @@
-import { ReactNode } from "react";
+import { ReactNode, useContext } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { Place, places, spots } from "./places";
-import { sides } from "./sides";
+import { Side, sides } from "./sides";
+import { ChosenSideContext } from "./context";
 
 interface Event {
   title: string;
@@ -22,17 +23,23 @@ const briefing: Event = {
   location: places.dolphin_centre,
   details: (
     <>
-      <p>Please ask any questions at this point.</p>
+      <p>Ask any questions at this point.</p>
       <p>
         We are collecting donations for the Great North Air Ambulance Service.
         Each team will be given a collecting bucket with a QR code attached (for
         which the minimum donation is £1).
+      </p>
+      <p>
+        Take shelter in bad weather until it clears up. Try not to obscure shop
+        entrances or windows.
       </p>
     </>
   ),
 };
 
 function SpotTable(props: { spotIndex: number }) {
+  const chosenSide = useContext(ChosenSideContext);
+
   return (
     <table className="m-auto border-collapse">
       <tbody>
@@ -40,17 +47,32 @@ function SpotTable(props: { spotIndex: number }) {
           const spotSides = Object.values(sides).filter(
             (side) => side.spots[props.spotIndex] === spot,
           );
+          if (
+            spotSides.length === 0 ||
+            (chosenSide && !spotSides.includes(chosenSide))
+          )
+            return null;
           return (
-            spotSides.length > 0 && (
-              <tr key={spot.name} className="border-y border-gray-400">
-                <td>{spot.link}</td>
-                <td className="flex flex-col">
-                  {spotSides.map((side) => (
-                    <span key={side.name}>{side.name}</span>
-                  ))}
-                </td>
-              </tr>
-            )
+            <tr key={spot.name} className="border-y border-neutral-500">
+              <td>
+                {spot.link}
+                {spot.details && <span className="block">{spot.details}</span>}
+              </td>
+              <td className="flex flex-col items-start">
+                {spotSides.map((side) => (
+                  <span
+                    className={
+                      chosenSide === side
+                        ? "rounded-md bg-neutral-800 px-2"
+                        : "px-2"
+                    }
+                    key={side.name}
+                  >
+                    {side.name}
+                  </span>
+                ))}
+              </td>
+            </tr>
           );
         })}
       </tbody>
@@ -93,6 +115,26 @@ const spot5: Event = {
   details: <SpotTable spotIndex={4} />,
 };
 
+function RunningOrder(props: { sides: Side[]; massDances?: Side[] }) {
+  const chosenSide = useContext(ChosenSideContext);
+
+  return (
+    <ol className="m-auto list-decimal">
+      {props.sides.map((side) => (
+        <li
+          key={side.name}
+          className={
+            chosenSide === side ? "rounded-md bg-neutral-800 px-2" : "px-2"
+          }
+        >
+          {side.name}
+          {props.massDances?.includes(side) && <span> (mass dance)</span>}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 const parade: Event = {
   title: "Parade",
   time: "15:30",
@@ -103,28 +145,30 @@ const parade: Event = {
         From outside the Cherry Tree on Blackwellgate to the Joseph Pease
         Statue. Running order:
       </p>
-      <ol className="m-auto list-decimal">
-        <li>{sides.black_diamond.name}</li>
-        <li>{sides.aire_valley.name}</li>
-        <li>{sides.ripon_city.name}</li>
-        <li>{sides.ramshackle.name}</li>
-        <li>{sides.redcar.name}</li>
-        <li>{sides.white_rose.name}</li>
-        <li>{sides.locos.name}</li>
-        <li>{sides.jet_set.name}</li>
-        <li>{sides.roots.name}</li>
-        <li>{sides.harlequin.name}</li>
-        <li>{sides.mons_meg.name}</li>
-        <li>{sides.black_sheep.name}</li>
-        <li>{sides.flag_crackers.name}</li>
-        <li>{sides.maltby.name}</li>
-        <li>{sides.yorkshire_coast.name}</li>
-        <li>{sides.flash_company.name}</li>
-        <li>{sides.border_reivers.name}</li>
-        <li>{sides.ebor.name}</li>
-        <li>{sides.silkstone_greens.name}</li>
-        <li>{sides.minster_strays.name}</li>
-      </ol>
+      <RunningOrder
+        sides={[
+          sides.black_diamond,
+          sides.aire_valley,
+          sides.ripon_city,
+          sides.ramshackle,
+          sides.redcar,
+          sides.white_rose,
+          sides.locos,
+          sides.jet_set,
+          sides.roots,
+          sides.harlequin,
+          sides.mons_meg,
+          sides.black_sheep,
+          sides.flag_crackers,
+          sides.maltby,
+          sides.yorkshire_coast,
+          sides.flash_company,
+          sides.border_reivers,
+          sides.ebor,
+          sides.silkstone_greens,
+          sides.minster_strays,
+        ]}
+      />
     </>
   ),
 };
@@ -135,34 +179,31 @@ const finale: Event = {
   location: places.joseph_pease_statue,
   details: (
     <>
-      <p>Running order:</p>
-      <ol className="m-auto list-decimal">
-        <li>{sides.ripon_city.name}</li>
-        <li>{sides.ramshackle.name}</li>
-        <li>{sides.redcar.name}</li>
-        <li>{sides.roots.name}</li>
-        <li>{sides.harlequin.name}</li>
-        <li>{sides.mons_meg.name}</li>
-        <li>{sides.black_sheep.name}</li>
-        <li>{sides.flag_crackers.name}</li>
-        <li>{sides.white_rose.name}</li>
-        <li>{sides.jet_set.name}</li>
-        <li>{sides.yorkshire_coast.name}</li>
-        <li>{sides.maltby.name}</li>
-        <li>{sides.border_reivers.name} (mass dance)</li>
-        <li>{sides.aire_valley.name}</li>
-        <li>{sides.flash_company.name}</li>
-        <li>{sides.ebor.name}</li>
-        <li>{sides.locos.name}</li>
-        <li>{sides.minster_strays.name}</li>
-        <li>{sides.silkstone_greens.name}</li>
-        <li>{sides.black_diamond.name} (mass dance)</li>
-      </ol>
-      <p>
-        If there are team members not dancing, then we would love to have them
-        engaging with the crowd and shaking buckets to raise money for the Great
-        North Air Ambulance.
-      </p>
+      <RunningOrder
+        sides={[
+          sides.ripon_city,
+          sides.ramshackle,
+          sides.redcar,
+          sides.roots,
+          sides.harlequin,
+          sides.mons_meg,
+          sides.black_sheep,
+          sides.flag_crackers,
+          sides.white_rose,
+          sides.jet_set,
+          sides.yorkshire_coast,
+          sides.maltby,
+          sides.border_reivers,
+          sides.aire_valley,
+          sides.flash_company,
+          sides.ebor,
+          sides.locos,
+          sides.minster_strays,
+          sides.silkstone_greens,
+          sides.black_diamond,
+        ]}
+        massDances={[sides.border_reivers, sides.black_diamond]}
+      />
       <p>
         There will be a post dance session in the {places.house_of_hop.link}{" "}
         which you are welcome to come and join. This will continue into the
@@ -210,6 +251,32 @@ const timetable = [
   },
 ];
 
+function TimetableLocation({ event }: { event: Event }) {
+  if (event.location !== undefined) {
+    return event.location.link;
+  }
+  const chosenSide = useContext(ChosenSideContext);
+  if (chosenSide === undefined) {
+    return null;
+  }
+  if (event.title === "Dance spot 1") {
+    return chosenSide.spots[0].link;
+  }
+  if (event.title === "Dance spot 2") {
+    return chosenSide.spots[1].link;
+  }
+  if (event.title === "Dance spot 3") {
+    return chosenSide.spots[2].link;
+  }
+  if (event.title === "Dance spot 4") {
+    return chosenSide.spots[3].link;
+  }
+  if (event.title === "Dance spot 5") {
+    return chosenSide.spots[4].link;
+  }
+  return null;
+}
+
 export function Timetable() {
   return (
     <table>
@@ -223,7 +290,9 @@ export function Timetable() {
               <tr key={event.time + event.title}>
                 <td>{event.time}</td>
                 <td>{event.title}</td>
-                <td>{event.location?.link}</td>
+                <td>
+                  <TimetableLocation event={event} />
+                </td>
               </tr>
             ))}
           </Fragment>
