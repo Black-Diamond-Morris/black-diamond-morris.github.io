@@ -165,8 +165,8 @@ const parade: Event = {
           sides.flash_company,
           sides.border_reivers,
           sides.ebor,
-          sides.silkstone_greens,
           sides.minster_strays,
+          sides.silkstone_greens,
         ]}
       />
     </>
