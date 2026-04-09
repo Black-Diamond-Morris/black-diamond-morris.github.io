@@ -187,7 +187,7 @@ export const sides: Record<string, Side> = {
     ],
   },
   white_rose: {
-    name: "White Rose",
+    name: "White Rose Garland",
     spots: [
       places.market,
       places.skinnergate,
