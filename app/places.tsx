@@ -40,7 +40,7 @@ export const places = {
   house_of_hop: new Place(
     "House of Hop",
     "https://maps.app.goo.gl/HLLbvmMomMpZVt3Q8",
-    "Event sponsor serving Black Diamond IPA from Three Brothers Brewing (also a sponsor). You are welcome to take in your own food and to start music/songs. Glasses are not permitted to be taken outside.",
+    "Event sponsor serving Black Diamond beer from Three Brothers Brewing (also a sponsor). You are welcome to take in your own food and to start music/songs. Glasses are not permitted to be taken outside.",
   ),
   market: new Place(
     "Indoor Market",
