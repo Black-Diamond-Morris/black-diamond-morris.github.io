@@ -160,12 +160,10 @@ const parade: Event = {
           sides.mons_meg,
           sides.black_sheep,
           sides.flag_crackers,
-          sides.maltby,
           sides.yorkshire_coast,
           sides.flash_company,
           sides.border_reivers,
           sides.ebor,
-          sides.minster_strays,
           sides.silkstone_greens,
         ]}
       />
@@ -192,13 +190,11 @@ const finale: Event = {
           sides.white_rose,
           sides.jet_set,
           sides.yorkshire_coast,
-          sides.maltby,
           sides.border_reivers,
           sides.aire_valley,
           sides.flash_company,
           sides.ebor,
           sides.locos,
-          sides.minster_strays,
           sides.silkstone_greens,
           sides.black_diamond,
         ]}
