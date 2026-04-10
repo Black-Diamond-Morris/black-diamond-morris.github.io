@@ -106,16 +106,6 @@ export const sides: Record<string, Side> = {
       places.market,
     ],
   },
-  maltby: {
-    name: "Maltby Sword",
-    spots: [
-      places.market,
-      places.blackwellgate,
-      places.houndgate,
-      places.market,
-      places.skinnergate,
-    ],
-  },
   minster_strays: {
     name: "Minster Strays",
     spots: [
